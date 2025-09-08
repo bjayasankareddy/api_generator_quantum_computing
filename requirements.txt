@@ -1,0 +1,7 @@
+qiskit==1.1.0
+qiskit_aer==0.14.1
+Flask==3.0.3
+Flask-Cors==4.0.1
+python-dotenv==1.0.1
+PyJWT==2.8.0
+gunicorn

@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuantumAuth API - Secure OTP Authentication</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0a0a0a;
+        }
+        .font-mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+        /* Simple spinner animation */
+        .loader {
+            border: 4px solid #374151; /* gray-700 */
+            border-radius: 50%;
+            border-top: 4px solid #3b82f6; /* blue-500 */
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        /* Styling for active tab */
+        .tab-active {
+            background-color: #3b82f6;
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-200">
+
+    <div class="container mx-auto px-4 py-12 md:py-20 max-w-4xl">
+
+        <!-- Header Section -->
+        <header class="text-center mb-12 md:mb-16">
+            <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">QuantumAuth API</h1>
+            <p class="text-lg md:text-xl text-gray-400">The future of security: Simple, fast, and quantum-powered OTP authentication for your applications.</p>
+        </header>
+
+        <!-- API Key Generation Section -->
+        <section id="get-api-key" class="bg-gray-800/50 border border-gray-700 rounded-xl p-6 md:p-8 mb-12 md:mb-16 shadow-2xl shadow-blue-500/10">
+            <h2 class="text-2xl font-semibold text-white text-center mb-2">Get Your Free API Key</h2>
+            <p class="text-gray-400 text-center mb-6">Enter your email below. We'll send your unique, quantum-generated API key right to your inbox.</p>
+            
+            <form id="apiKeyForm" class="max-w-lg mx-auto">
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <input type="email" id="email" name="email"
+                           class="w-full px-4 py-3 bg-gray-900 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200"
+                           placeholder="you@example.com" required>
+                    
+                    <button type="submit" id="submitButton"
+                            class="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-md transition duration-300 flex items-center justify-center whitespace-nowrap">
+                        <span id="buttonText">Get API Key</span>
+                        <div id="loader" class="loader hidden ml-3"></div>
+                    </button>
+                </div>
+            </form>
+             <div id="message" class="mt-6 text-center text-sm p-3 rounded-md min-h-[44px]"></div>
+        </section>
+
+        <!-- What is this API Section -->
+        <section id="about" class="mb-12 md:mb-16">
+            <h2 class="text-3xl font-bold text-white text-center mb-8">Secure Your Users with Quantum-Powered OTPs</h2>
+            <div class="grid md:grid-cols-2 gap-8 text-gray-300">
+                <div>
+                    <h3 class="text-xl font-semibold text-white mb-3">Effortless Integration</h3>
+                    <p>Stop worrying about building and maintaining complex authentication logic. With QuantumAuth, you can add a robust OTP system to your application with just a few lines of code. We handle the generation, delivery, and verification so you can focus on your product.</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold text-white mb-3">Unparalleled Security</h3>
+                    <p>Our API keys and OTPs are generated using true randomness sourced from a quantum computer simulator. This provides a higher level of cryptographic security than traditional pseudo-random number generators, protecting you and your users from predictive attacks.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Integration Guide Section -->
+        <section id="integration">
+            <h2 class="text-3xl font-bold text-white text-center mb-8">How to Integrate</h2>
+
+            <div class="bg-gray-800/50 border border-gray-700 rounded-xl shadow-lg">
+                <!-- Tabs -->
+                <div class="flex border-b border-gray-700 p-2">
+                    <button class="tab-btn tab-active" data-lang="python">Python</button>
+                    <button class="tab-btn" data-lang="javascript">JavaScript</button>
+                    <button class="tab-btn" data-lang="curl">cURL</button>
+                </div>
+
+                <!-- Code Content -->
+                <div class="p-4 md:p-6">
+                    <!-- Python Snippet -->
+                    <div id="code-python" class="code-content">
+                        <p class="text-sm text-gray-400 mb-4">Use the <code class="font-mono bg-gray-700 p-1 rounded-md">requests</code> library in Python to interact with the API.</p>
+                        <div class="relative">
+                            <pre class="bg-gray-900 rounded-lg p-4 text-sm font-mono overflow-x-auto"><code class="language-python">
+import requests
+
+API_URL = "https://your-api-domain.com/v1" # This is a hypothetical URL
+API_KEY = "YOUR_API_KEY_HERE" # Your key received by email
+
+headers = {
+    "Authorization": f"Bearer {API_KEY}",
+    "Content-Type": "application/json"
+}
+
+# 1. Send an OTP to a user
+send_otp_payload = {
+    "recipient": "user@example.com",
+    "channel": "email" # or "sms"
+}
+response = requests.post(f"{API_URL}/send-otp", json=send_otp_payload, headers=headers)
+print(response.json())
+
+
+# 2. Verify an OTP from a user
+verify_otp_payload = {
+    "recipient": "user@example.com",
+    "otp_code": "123456" # The code entered by the user
+}
+response = requests.post(f"{API_URL}/verify-otp", json=verify_otp_payload, headers=headers)
+print(response.json())
+                            </code></pre>
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                    <!-- JavaScript Snippet -->
+                    <div id="code-javascript" class="code-content hidden">
+                        <p class="text-sm text-gray-400 mb-4">Use the <code class="font-mono bg-gray-700 p-1 rounded-md">fetch</code> API in Node.js or the browser.</p>
+                         <div class="relative">
+                            <pre class="bg-gray-900 rounded-lg p-4 text-sm font-mono overflow-x-auto"><code class="language-javascript">
+const API_URL = 'https://your-api-domain.com/v1'; // This is a hypothetical URL
+const API_KEY = 'YOUR_API_KEY_HERE'; // Your key received by email
+
+const headers = {
+    'Authorization': `Bearer ${API_KEY}`,
+    'Content-Type': 'application/json'
+};
+
+// 1. Send an OTP to a user
+async function sendOtp() {
+    const payload = { recipient: 'user@example.com', channel: 'email' };
+    const response = await fetch(`${API_URL}/send-otp`, {
+        method: 'POST',
+        headers: headers,
+        body: JSON.stringify(payload)
+    });
+    console.log(await response.json());
+}
+
+// 2. Verify an OTP from a user
+async function verifyOtp() {
+    const payload = { recipient: 'user@example.com', otp_code: '123456' };
+    const response = await fetch(`${API_URL}/verify-otp`, {
+        method: 'POST',
+        headers: headers,
+        body: JSON.stringify(payload)
+    });
+    console.log(await response.json());
+}
+
+sendOtp();
+                            </code></pre>
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                    <!-- cURL Snippet -->
+                    <div id="code-curl" class="code-content hidden">
+                        <p class="text-sm text-gray-400 mb-4">You can use cURL directly from your terminal to test the API.</p>
+                        <div class="relative">
+                            <pre class="bg-gray-900 rounded-lg p-4 text-sm font-mono overflow-x-auto"><code class="language-bash">
+# 1. Send an OTP to a user
+curl -X POST https://your-api-domain.com/v1/send-otp \\
+  -H "Authorization: Bearer YOUR_API_KEY_HERE" \\
+  -H "Content-Type: application/json" \\
+  -d '{"recipient": "user@example.com", "channel": "email"}'
+
+
+# 2. Verify an OTP from a user
+curl -X POST https://your-api-domain.com/v1/verify-otp \\
+  -H "Authorization: Bearer YOUR_API_KEY_HERE" \\
+  -H "Content-Type: application/json" \\
+  -d '{"recipient": "user@example.com", "otp_code": "123456"}'
+                            </code></pre>
+                             <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // --- Form Submission Logic ---
+        const apiKeyForm = document.getElementById('apiKeyForm');
+        const emailInput = document.getElementById('email');
+        const messageDiv = document.getElementById('message');
+        const submitButton = document.getElementById('submitButton');
+        const buttonText = document.getElementById('buttonText');
+        const loader = document.getElementById('loader');
+
+        apiKeyForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const email = emailInput.value.trim();
+            if (!email) {
+                displayMessage('Please enter a valid email address.', 'error');
+                return;
+            }
+            setLoading(true);
+            try {
+                const response = await fetch('http://127.0.0.1:5000/api/generate-key', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: email }),
+                });
+                const data = await response.json();
+                if (response.ok) {
+                    displayMessage(data.message, 'success');
+                } else {
+                    displayMessage(data.error || 'An unknown server error occurred.', 'error');
+                }
+            } catch (error) {
+                console.error('Fetch error:', error);
+                displayMessage('Could not connect to the API server. Please ensure it is running.', 'error');
+            } finally {
+                setLoading(false);
+            }
+        });
+
+        function displayMessage(text, type) {
+            messageDiv.textContent = text;
+            messageDiv.className = 'mt-6 text-center text-sm p-3 rounded-md'; // Reset classes
+            if (type === 'success') {
+                messageDiv.classList.add('bg-green-500/10', 'text-green-300');
+            } else if (type === 'error') {
+                messageDiv.classList.add('bg-red-500/10', 'text-red-300');
+            }
+        }
+
+        function setLoading(isLoading) {
+            submitButton.disabled = isLoading;
+            if (isLoading) {
+                buttonText.textContent = 'Processing...';
+                loader.classList.remove('hidden');
+                messageDiv.textContent = '';
+                messageDiv.className = 'mt-6 text-center text-sm p-3 rounded-md min-h-[44px]';
+            } else {
+                buttonText.textContent = 'Get API Key';
+                loader.classList.add('hidden');
+            }
+        }
+
+        // --- Tab Switching Logic ---
+        const tabButtons = document.querySelectorAll('.tab-btn');
+        const codeContents = document.querySelectorAll('.code-content');
+
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const lang = button.dataset.lang;
+                
+                tabButtons.forEach(btn => {
+                    btn.classList.remove('tab-active');
+                    btn.classList.add('hover:bg-gray-700', 'text-gray-400', 'py-2', 'px-4', 'rounded-md', 'transition');
+                });
+                button.classList.add('tab-active');
+                
+                codeContents.forEach(content => {
+                    content.classList.add('hidden');
+                });
+                document.getElementById(`code-${lang}`).classList.remove('hidden');
+            });
+            // Apply base styles
+            if (!button.classList.contains('tab-active')) {
+                 button.classList.add('hover:bg-gray-700', 'text-gray-400', 'py-2', 'px-4', 'rounded-md', 'transition');
+            }
+        });
+
+        // --- Copy to Clipboard Logic ---
+        const copyButtons = document.querySelectorAll('.copy-btn');
+        copyButtons.forEach(button => {
+            button.style.cssText = 'position: absolute; top: 0.75rem; right: 0.75rem; background-color: #374151; color: #d1d5db; border: none; padding: 0.25rem 0.5rem; border-radius: 0.375rem; font-size: 0.75rem; cursor: pointer;';
+            button.textContent = 'Copy';
+            button.addEventListener('click', () => {
+                const pre = button.previousElementSibling;
+                const code = pre.querySelector('code').innerText;
+                navigator.clipboard.writeText(code).then(() => {
+                    button.textContent = 'Copied!';
+                    setTimeout(() => {
+                        button.textContent = 'Copy';
+                    }, 2000);
+                });
+            });
+        });
+
+    </script>
+</body>
+</html>
