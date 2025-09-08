@@ -1,8 +1,9 @@
-qiskit==1.1.0
-qiskit_aer==0.14.1
-Flask==3.0.3
-Flask-Cors==4.0.1
-python-dotenv==1.0.1
-PyJWT==2.8.0
-gunicorn==22.0.0
-psycopg2-binary==2.9.9
+qiskit
+qiskit_aer
+Flask
+Flask-Cors
+python-dotenv
+PyJWT
+gunicorn
+psycopg2-binary
+
